@@ -3,9 +3,8 @@ FROM centos:7.6.1810
 MAINTAINER Soulblade "phuocvu@builtwithdigital.com"
 
 # Base Packages
-RUN yum update \
- && yum -y --setopt=tsflags=nodocs install httpd wget git curl \
-         vim crontabs unzip sudo net-tools openssh-server \
+RUN yum -y update \
+ && yum -y --setopt=tsflags=nodocs install httpd wget git curl vim crontabs unzip sudo net-tools openssh-server \
 # SSH
  && systemctl start sshd
 
