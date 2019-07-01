@@ -1,5 +1,5 @@
 # Docker LAMP Developer
-FROM centos:
+FROM centos:7.6.1810
 MAINTAINER Soulblade "phuocvu@builtwithdigital.com"
 
 # Base Packages
