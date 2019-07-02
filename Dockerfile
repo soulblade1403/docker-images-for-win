@@ -2,12 +2,24 @@
 FROM centos:7.6.1810
 MAINTAINER Soulblade "phuocvu@builtwithdigital.com"
 
+# Steps needed to use systemd enabled docker containers.
+# Reference: https://hub.docker.com/_/centos/
+ENV container docker
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
+    systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+    rm -f /lib/systemd/system/multi-user.target.wants/*;\
+    rm -f /etc/systemd/system/*.wants/*;\
+    rm -f /lib/systemd/system/local-fs.target.wants/*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+    rm -f /lib/systemd/system/basic.target.wants/*; \
+    rm -f /lib/systemd/system/anaconda.target.wants/*; 
+    
 # Base Packages
 RUN yum -y update \
- && yum -y --setopt=tsflags=nodocs install httpd wget git curl vim crontabs unzip sudo net-tools openssh-server \
-# SSH
- && systemctl start sshd
-
+ && yum -y --setopt=tsflags=nodocs install httpd wget git curl vim crontabs unzip sudo net-tools  \
+        glibc-common openssh-server && yum clean all
+  && systemctl start sshd.service
 # Config Apache
 COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc/httpd/conf.modules.d/00-base.conf \
@@ -41,7 +53,7 @@ RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc
  && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' /etc/php.ini \
  && sed -i 's/short_open_tag = Off/short_open_tag = On/g' /etc/php.ini \
 # Composer
- && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
  && composer -v 
 
 # Create sudo user
@@ -64,5 +76,6 @@ WORKDIR /var/www/html
 
 # Start
 USER web
-#EXPOSE 80 443
-ENTRYPOINT ["./usr/sbin/run.sh && ./usr/sbin/cron-run.sh"]
+#EXPOSE 80 443 22
+ENTRYPOINT ["./usr/sbin/httpd-run.sh && ./usr/sbin/cron-run.sh"]
+CMD ["/usr/sbin/init"]
