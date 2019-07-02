@@ -17,9 +17,9 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
     
 # Base Packages
 RUN yum -y update \
- && yum -y --setopt=tsflags=nodocs install httpd wget git curl vim crontabs unzip sudo net-tools  \
-        glibc-common openssh-server && yum clean all
-  && systemctl start sshd.service
+ && yum -y --setopt=tsflags=nodocs install httpd wget git curl vim crontabs \
+        unzip sudo net-tools glibc-common && yum clean all
+
 # Config Apache
 COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc/httpd/conf.modules.d/00-base.conf \
@@ -76,6 +76,6 @@ WORKDIR /var/www/html
 
 # Start
 USER web
-#EXPOSE 80 443 22
+#EXPOSE 80 443
 ENTRYPOINT ["./usr/sbin/httpd-run.sh && ./usr/sbin/cron-run.sh"]
 CMD ["/usr/sbin/init"]
