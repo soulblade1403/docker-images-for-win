@@ -46,7 +46,7 @@ RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc
  && yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-15.ius.centos7.noarch.rpm \
  && yum -y install php71u php71u-pdo php71u-mysqlnd php71u-opcache php71u-xml php71u-mcrypt php71u-gd \
         php71u-intl php71u-mbstring php71u-bcmath php71u-json php71u-iconv php71u-soap  php71u-cli \
-        php71u-pecl-imagick php71u-pecl-redis php71u-devel \
+        php71u-pecl-imagick php71u-pecl-redis php71u-devel 
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini \
  && sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php.ini \
  && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' /etc/php.ini \
