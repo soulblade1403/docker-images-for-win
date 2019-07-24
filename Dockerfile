@@ -46,17 +46,17 @@ RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc
  && yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-15.ius.centos7.noarch.rpm \
  && yum -y install php71u php71u-pdo php71u-mysqlnd php71u-opcache php71u-xml php71u-mcrypt php71u-gd \
         php71u-intl php71u-mbstring php71u-bcmath php71u-json php71u-iconv php71u-soap  php71u-cli \
-        php71u-pecl-imagick php71u-pecl-redis php71u-devel 
-RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini \
+        php71u-pecl-imagick php71u-pecl-redis php71u-devel \
+ && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini \
  && sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php.ini \
  && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' /etc/php.ini \
- && sed -i 's/short_open_tag = Off/short_open_tag = On/g' /etc/php.ini 
+ && sed -i 's/short_open_tag = Off/short_open_tag = On/g' /etc/php.ini \
 # Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+ && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
  && composer -v 
 
 # Create sudo user
-RUN useradd -r -u 1001 -g web web \
+RUN useradd -r -u 1001 -g 1001 web \
  && usermod -aG root web && usermod -aG apache web \
  && echo "web      ALL=(ALL)       ALL" >> /etc/sudoers
 
