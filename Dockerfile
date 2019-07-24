@@ -43,7 +43,7 @@ RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc
  && sed -i 's/LoadModule proxy_ftp_module/#LoadModule proxy_ftp_module/g' /etc/httpd/conf.modules.d/00-proxy.conf \
  && sed -i 's/LoadModule proxy_http_module/#LoadModule proxy_http_module/g' /etc/httpd/conf.modules.d/00-proxy.conf \
 # Install && Config PHP
- && yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-14.ius.centos7.noarch.rpm \
+ && yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-15.ius.centos7.noarch.rpm \
  && yum -y install php71u php71u-pdo php71u-mysqlnd php71u-opcache php71u-xml php71u-mcrypt php71u-gd \
         php71u-intl php71u-mbstring php71u-bcmath php71u-json php71u-iconv php71u-soap  php71u-cli \
         php71u-pecl-imagick php71u-pecl-redis php71u-devel \
