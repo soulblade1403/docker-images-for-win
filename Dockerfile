@@ -21,7 +21,7 @@ RUN yum -y update \
         unzip sudo net-tools glibc-common && yum clean all
 
 # Config Apache
-COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
+ADD config/httpd.conf /etc/httpd/conf/httpd.conf
 RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc/httpd/conf.modules.d/00-base.conf \
  && sed -i 's/LoadModule authn_dbm_module/#LoadModule authn_dbm_module/g' /etc/httpd/conf.modules.d/00-base.conf \
  && sed -i 's/LoadModule authz_dbm_module/#LoadModule authz_dbm_module/g' /etc/httpd/conf.modules.d/00-base.conf \ 
