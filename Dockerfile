@@ -56,7 +56,7 @@ RUN sed -i 's/LoadModule authn_anon_module/#LoadModule authn_anon_module/g' /etc
  && composer -v 
 
 # Create sudo user
-RUN useradd -r -u 1001 -g 1001 web \
+RUN useradd -r -u 1001 web \
  && usermod -aG root web && usermod -aG apache web \
  && echo "web      ALL=(ALL)       ALL" >> /etc/sudoers
 
