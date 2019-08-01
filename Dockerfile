@@ -77,4 +77,4 @@ WORKDIR /var/www/html
 USER web
 #EXPOSE 80 443
 ENTRYPOINT ["./usr/sbin/httpd-run.sh && ./usr/sbin/cron-run.sh"]
-CMD ["/usr/sbin/init"]
+#CMD ["/usr/sbin/init"]
