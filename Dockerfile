@@ -61,14 +61,14 @@ RUN useradd -r -u 1001 web \
  && echo "web      ALL=(ALL)       ALL" >> /etc/sudoers
 
 # Create run.sh file
-ADD config/httpd-run.sh /usr/sbin/httpd-run.sh
-ADD config/cron-run.sh /usr/sbin/cron-run.sh
-ADD config/mage-setup.sh /usr/sbin/mage-setup.sh
-ADD config/mage-update.sh /usr/sbin/mage-update.sh
-RUN chmod +x /usr/sbin/httpd-run.sh \
- && chmod +x /usr/sbin/cron-run.sh \
- && chmod +x /usr/sbin/mage-setup.sh \
- && chmod +x /usr/sbin/mage-update.sh
+ADD config/httpd-run.sh /sbin/httpd-run.sh
+ADD config/cron-run.sh /sbin/cron-run.sh
+ADD config/mage-setup.sh /sbin/mage-setup.sh
+ADD config/mage-update.sh /sbin/mage-update.sh
+RUN chmod +x /sbin/httpd-run.sh \
+ && chmod +x /sbin/cron-run.sh \
+ && chmod +x /sbin/mage-setup.sh \
+ && chmod +x /sbin/mage-update.sh
 
 VOLUME ["/var/www/html"]
 WORKDIR /var/www/html
@@ -76,5 +76,5 @@ WORKDIR /var/www/html
 # Start
 USER web
 #EXPOSE 80 443
-ENTRYPOINT ["./usr/sbin/httpd-run.sh && ./usr/sbin/cron-run.sh"]
+ENTRYPOINT ["./httpd-run.sh && ./cron-run.sh"]
 #CMD ["/usr/sbin/init"]
