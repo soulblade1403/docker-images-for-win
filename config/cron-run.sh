@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 BASE_DIR=/var/www
 SRC_DIR=$BASE_DIR/html
 
