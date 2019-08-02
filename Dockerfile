@@ -59,7 +59,4 @@ ADD config/mage-update.sh /usr/bin/mage-update.sh
 RUN chmod -v +x /httpd-run.sh /cron-run.sh \
  && chmod -v +x /usr/bin/mage-setup.sh /usr/bin/mage-update.sh
 
-# Setup user
-USER web
-
 CMD ["/httpd-run.sh", "/cron-run.sh"]
